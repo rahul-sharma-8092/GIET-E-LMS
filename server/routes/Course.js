@@ -6,47 +6,47 @@ const router = express.Router()
 
 // Course Controllers Import
 const {
-  createCourse,
-  getAllCourses,
-  getCourseDetails,
-  getFullCourseDetails,
-  editCourse,
-  getInstructorCourses,
-  deleteCourse,
+    createCourse,
+    getAllCourses,
+    getCourseDetails,
+    getFullCourseDetails,
+    editCourse,
+    getInstructorCourses,
+    deleteCourse,
 } = require("../controllers/Course")
 
 // Tags Controllers Import
 
 // Categories Controllers Import
 const {
-  showAllCategories,
-  createCategory,
-  categoryPageDetails,
+    showAllCategories,
+    createCategory,
+    categoryPageDetails,
 } = require("../controllers/Category")
 
 // Sections Controllers Import
 const {
-  createSection,
-  updateSection,
-  deleteSection,
+    createSection,
+    updateSection,
+    deleteSection,
 } = require("../controllers/Section")
 
 // Sub-Sections Controllers Import
 const {
-  createSubSection,
-  updateSubSection,
-  deleteSubSection,
+    createSubSection,
+    updateSubSection,
+    deleteSubSection,
 } = require("../controllers/Subsection")
 
 // Rating Controllers Import
 const {
-  createRating,
-  getAverageRating,
-  getAllRatingReview,
+    createRating,
+    getAverageRating,
+    getAllRatingReview,
 } = require("../controllers/RatingandReview")
 const {
-  updateCourseProgress,
-  getProgressPercentage,
+    updateCourseProgress,
+    getProgressPercentage,
 } = require("../controllers/courseProgress")
 // Importing Middlewares
 const { auth, isInstructor, isStudent, isAdmin } = require("../middleware/auth")
