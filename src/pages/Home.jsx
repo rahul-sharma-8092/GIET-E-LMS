@@ -38,18 +38,12 @@ function Home() {
                 </div>
 
                 {/* Sub Heading */}
-                <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
+                <div className="-mt-3 w-[90%] text-justify text-lg font-bold text-richblack-300 md:text-center">
                     This is our e-Learning webpage. We are providing onine
                     courses in every domain of engineering. Through this online
                     courses you enhance your Theoritical, Paractical &
                     Technological knowledge.
                 </div>
-                {/* <div className="-mt-3 w-[90%] text-center text-lg font-bold text-richblack-300">
-          With our online coding courses, you can learn at your own pace, from
-          anywhere in the world, and get access to a wealth of resources,
-          including hands-on projects, quizzes, and personalized feedback from
-          instructors.
-        </div> */}
 
                 {/* CTA Buttons */}
                 <div className="mt-8 flex flex-row gap-7">
@@ -63,7 +57,7 @@ function Home() {
 
                 <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
                     <img
-                        className="shadow-[20px_20px_rgba(255,255,255)]"
+                        className="shadow-[10px_10px_rgba(255,255,255)] md:shadow-[20px_20px_rgba(255,255,255)]"
                         src={Banner}
                         alt="Giet-College-Banner"
                     />
@@ -81,7 +75,6 @@ function Home() {
                         }
                         subheading={
                             "Our courses are designed and taught by industry experts who have years of experience in Technical education and are passionate about sharing their knowledge with you."
-                            // "Our courses are designed and taught by industry experts who have years of experience in coding and are passionate about sharing their knowledge with you."
                         }
                         ctabtn1={{
                             btnText: "Try it Yourself",
@@ -94,7 +87,7 @@ function Home() {
                             active: false,
                         }}
                         codeColor={"text-yellow-25"}
-                        codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>This is myPage</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav> <a href="/one">One</a> <a href="/two">Two</a> <a href="/three">Three</a>\n</nav>\n</body>`}
+                        codeblock={`<!DOCTYPE html>\n <html lang="en">\n<head>\n<title>Er. Rahul Sharma</title>\n</head>\n<body>\n<h1><a href="/">Header</a></h1>\n<nav> <a href="/one">One</a> <a href="/two">Two</a> <a href="/three">Three</a>\n</nav>\n</body>`}
                         backgroundGradient={
                             <div className="codeblock1 absolute"></div>
                         }
