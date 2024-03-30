@@ -8,7 +8,7 @@ const contactDetails = [
         icon: "HiChatBubbleLeftRight",
         heading: "Chat on us",
         description: "Our friendly team is here to help.",
-        details: "gietelms@gmail.com",
+        details: "elms.giet@gmail.com",
     },
     {
         icon: "BiWorld",
@@ -20,8 +20,8 @@ const contactDetails = [
     {
         icon: "IoCall",
         heading: "Call us",
-        description: "Mon - Fri From 8am to 5pm",
-        details: "+91 9800060001",
+        description: "Mon - Sat From 9am to 5pm",
+        details: "+91 8092726691",
     },
 ]
 

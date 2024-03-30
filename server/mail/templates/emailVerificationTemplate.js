@@ -67,18 +67,18 @@ const otpTemplate = (otp) => {
 	<body>
 		<div class="container">
 			<a href="https://giet-elms.vercel.app/"><img class="logo"
-					src="https://i.ibb.co/7Xyj3PC/logo.png" alt="gietelms@gmail.com"></a>
+					src="https://res.cloudinary.com/dm1hqitro/image/upload/v1711772168/Assests/z4zyuf6g6qxibp4gvnoc.jpg" alt="GIET E-LMS"></a>
 			<div class="message">OTP Verification Email</div>
 			<div class="body">
 				<p>Dear User,</p>
-				<p>Thank you for registering with StudyNotion. To complete your registration, please use the following OTP
+				<p>Thank you for registering with GIET E-LMS. To complete your registration, please use the following OTP
 					(One-Time Password) to verify your account:</p>
 				<h2 class="highlight">${otp}</h2>
 				<p>This OTP is valid for 5 minutes. If you did not request this verification, please disregard this email.
 				Once your account is verified, you will have access to our platform and its features.</p>
 			</div>
 			<div class="support">If you have any questions or need assistance, please feel free to reach out to us at <a
-					href="mailto:gietelms@gmail.com">gietelms@gmail.com</a>. We are here to help!</div>
+					href="mailto:elms.giet@gmail.com">elms.giet@gmail.com</a>. We are here to help!</div>
 		</div>
 	</body>
 	

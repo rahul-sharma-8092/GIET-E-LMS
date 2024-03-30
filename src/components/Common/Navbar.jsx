@@ -4,7 +4,8 @@ import { BsChevronDown } from "react-icons/bs"
 import { useSelector } from "react-redux"
 import { Link, matchPath, useLocation } from "react-router-dom"
 
-import logo from "../../assets/Logo/lms-light.png"
+// import logo from "../../assets/Logo/lms-light.png"
+import logo from "../../assets/Logo/Logo.jpg"
 import { NavbarLinks } from "../../data/navbar-links"
 import { apiConnector } from "../../services/apiConnector"
 import { categories } from "../../services/apis"
@@ -26,7 +27,7 @@ import ProfileDropdown from "../core/Auth/ProfileDropdown"
 //   },
 //   {
 //     title: "Android Development",
-//     link: "/catalog/Android Development",
+//     link: "/catalog/Android-Development",
 //   },
 // ];
 

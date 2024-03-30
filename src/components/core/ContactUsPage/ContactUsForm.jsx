@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react"
 import { useForm } from "react-hook-form"
+import { toast } from "react-hot-toast"
 
 import CountryCode from "../../../data/countrycode.json"
 import { apiConnector } from "../../../services/apiConnector"
@@ -23,7 +24,8 @@ const ContactUsForm = () => {
                 contactusEndpoint.CONTACT_US_API,
                 data
             )
-            // console.log("Email Res - ", res)
+            console.log(res)
+            toast.success("Message sent to Admin.")
             setLoading(false)
         } catch (error) {
             console.log("ERROR MESSAGE - ", error.message)

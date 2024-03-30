@@ -3,7 +3,7 @@ import { FaArrowRight } from "react-icons/fa"
 import { Link } from "react-router-dom"
 
 // Image and Video Import
-import Banner from "../assets/Images/banner.mp4"
+import Banner from "../assets/Images/College-Image.png"
 // Component Imports
 import Footer from "../components/Common/Footer"
 import ReviewSlider from "../components/Common/ReviewSlider"
@@ -61,19 +61,14 @@ function Home() {
                     </CTAButton>
                 </div>
 
-                {/* Video */}
                 <div className="mx-3 my-7 shadow-[10px_-5px_50px_-5px] shadow-blue-200">
-                    <video
+                    <img
                         className="shadow-[20px_20px_rgba(255,255,255)]"
-                        muted
-                        loop
-                        autoPlay
-                    >
-                        <source src={Banner} type="video/mp4" />
-                    </video>
+                        src={Banner}
+                        alt="Giet-College-Banner"
+                    />
                 </div>
 
-                {/* Code Section 1  */}
                 <div>
                     <CodeBlocks
                         position={"lg:flex-row"}
@@ -185,7 +180,7 @@ function Home() {
                     <TimelineSection />
 
                     {/* Learning Language Section - Section 3 */}
-                    <LearningLanguageSection />
+                    {/* <LearningLanguageSection /> */}
                 </div>
             </div>
 

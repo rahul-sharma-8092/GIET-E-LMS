@@ -8,7 +8,6 @@ exports.contactUsEmail = (
 ) => {
     return `<!DOCTYPE html>
   <html>
-  
   <head>
       <meta charset="UTF-8">
       <title>Contact Form Confirmation</title>
@@ -75,7 +74,8 @@ exports.contactUsEmail = (
   <body>
       <div class="container">
           <a href="https://giet-elms.vercel.app/"><img class="logo"
-                  src="https://i.ibb.co/7Xyj3PC/logo.png" alt="Giet E-LMS"></a>
+                  src="https://res.cloudinary.com/dm1hqitro/image/upload/v1711772168/Assests/z4zyuf6g6qxibp4gvnoc.jpg" alt="Giet E-LMS"/>
+            </a>
           <div class="message">Contact Form Confirmation</div>
           <div class="body">
               <p>Dear ${firstname} ${lastname},</p>
@@ -88,7 +88,7 @@ exports.contactUsEmail = (
               <p>Message: ${message}</p>
               <p>We appreciate your interest and will get back to you shortly. </p>
           </div>
-          <div class="support">If you have any further questions or need immediate assistance, please feel free to reach out to us at <a href="mailto:gietelms@gmail.com">gietelms@gmail.com</a>. We are here to help!</div>
+          <div class="support">If you have any further questions or need immediate assistance, please feel free to reach out to us at <a href="mailto:elms.giet@gmail.com">elms.giet@gmail.com</a>. We are here to help!</div>
       </div>
   </body>
   

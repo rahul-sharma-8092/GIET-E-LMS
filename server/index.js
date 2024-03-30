@@ -26,16 +26,16 @@ database.connect()
 app.use(express.json())
 app.use(cookieParser())
 app.use(
-  cors({
-    origin: "*",
-    credentials: true,
-  })
+    cors({
+        origin: "*",
+        credentials: true,
+    })
 )
 app.use(
-  fileUpload({
-    useTempFiles: true,
-    tempFileDir: "/tmp/",
-  })
+    fileUpload({
+        useTempFiles: true,
+        tempFileDir: "/tmp/",
+    })
 )
 
 // Connecting to cloudinary
@@ -50,15 +50,15 @@ app.use("/api/v1/reach", contactUsRoute)
 
 // Testing the server
 app.get("/", (req, res) => {
-  return res.json({
-    success: true,
-    message: "Your server is up and running ...",
-  })
+    return res.json({
+        success: true,
+        message: "Your server is up and running ...",
+    })
 })
 
 // Listening to the server
 app.listen(PORT, () => {
-  console.log(`App is listening at ${PORT}`)
+    console.log(`App is listening at ${PORT}`)
 })
 
 // End of code.
