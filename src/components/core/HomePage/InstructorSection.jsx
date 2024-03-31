@@ -24,7 +24,7 @@ const InstructorSection = () => {
 
                     <p className="w-[90%] text-justify text-[16px] font-medium text-richblack-300">
                         Instructors from around the world teach millions of
-                        students on StudyNotion. We provide the tools and skills
+                        students on GIET E-LMS. We provide the tools and skills
                         to teach what you love.
                     </p>
 
