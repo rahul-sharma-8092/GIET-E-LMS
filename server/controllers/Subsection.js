@@ -5,6 +5,7 @@ dotenv.config()
 const Section = require("../models/Section")
 const SubSection = require("../models/Subsection")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
+const { uploadPDFToFirebase } = require("../utils/pdfUploaderFirebase")
 
 // Create a new sub-section for a given section
 exports.createSubSection = async (req, res) => {
@@ -12,6 +13,7 @@ exports.createSubSection = async (req, res) => {
         // Extract necessary information from the request body
         const { sectionId, title, description } = req.body
         const video = req.files.video
+        const notes = req.files.notes
 
         // Check if all necessary fields are provided
         if (!sectionId || !title || !description || !video) {
@@ -19,20 +21,33 @@ exports.createSubSection = async (req, res) => {
                 .status(404)
                 .json({ success: false, message: "All Fields are Required" })
         }
-        console.log(video)
+        console.log("Video upload data: ", video)
+        console.log("Notes Upload data: ", notes)
 
         // Upload the video file to Cloudinary
         const uploadDetails = await uploadImageToCloudinary(
             video,
             process.env.FOLDER_NAME_VIDEO
         )
-        console.log(uploadDetails)
+        console.log("Video URL: ", uploadDetails)
+
+        let uploadNotesURL = ""
+        if (notes !== undefined) {
+            //Upload Notes Pdf to Firebase
+            uploadNotesURL = await uploadPDFToFirebase(
+                notes.tempFilePath,
+                `Notes/notes-${Date.now()}.pdf`
+            )
+            console.log("PDF Notes URL: ", uploadNotesURL)
+        }
+
         // Create a new sub-section with the necessary information
         const SubSectionDetails = await SubSection.create({
             title: title,
             timeDuration: `${uploadDetails.duration}`,
             description: description,
             videoUrl: uploadDetails.secure_url,
+            notesUrl: uploadNotesURL,
         })
 
         // Update the corresponding section with the newly created sub-section
@@ -84,6 +99,22 @@ exports.updateSubSection = async (req, res) => {
             subSection.timeDuration = `${uploadDetails.duration}`
         }
 
+        if (
+            req.files &&
+            req.files.notes !== undefined &&
+            req.files.notes !== "h"
+        ) {
+            const notes = req.files.notes
+            console.log("Notes Updating value", notes)
+            //Upload Notes Pdf to Firebase
+            const uploadNotesURL = await uploadPDFToFirebase(
+                notes.tempFilePath,
+                `Notes/notes-${Date.now()}.pdf`
+            )
+
+            subSection.notesUrl = uploadNotesURL
+            console.log("Updated PDF Notes URL: ", uploadNotesURL)
+        }
         await subSection.save()
 
         // find updated section and return it

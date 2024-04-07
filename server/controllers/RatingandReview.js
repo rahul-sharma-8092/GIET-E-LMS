@@ -28,10 +28,16 @@ exports.createRating = async (req, res) => {
             course: courseId,
         })
 
-        if (alreadyReviewed) {
-            return res.status(403).json({
-                success: false,
-                message: "Course already reviewed by user",
+        console.log(alreadyReviewed)
+
+        if (alreadyReviewed != null) {
+            await RatingAndReview.findByIdAndUpdate(alreadyReviewed._id, {
+                review: review,
+                rating: rating,
+            })
+            return res.status(200).json({
+                success: true,
+                message: "Review Updated",
             })
         }
 
@@ -57,7 +63,7 @@ exports.createRating = async (req, res) => {
             ratingReview,
         })
     } catch (error) {
-        console.error(error)
+        console.error("Error while creating review: ", error)
         return res.status(500).json({
             success: false,
             message: "Internal server error",
@@ -121,8 +127,6 @@ exports.getAllRatingReview = async (req, res) => {
                 select: "courseName", //Specify the fields you want to populate from the "Course" model
             })
             .exec()
-
-        console.log("Review Data:", allReviews)
 
         res.status(200).json({
             success: true,

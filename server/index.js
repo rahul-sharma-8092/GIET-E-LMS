@@ -41,6 +41,8 @@ app.use(
 // Connecting to cloudinary
 cloudinaryConnect()
 
+//Connecting to firebase
+
 // Setting up routes
 app.use("/api/v1/auth", userRoutes)
 app.use("/api/v1/profile", profileRoutes)

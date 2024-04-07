@@ -9,6 +9,7 @@ const User = require("../models/User")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const mongoose = require("mongoose")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
+const RatingandReview = require("../models/RatingandReview")
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
     try {
@@ -89,6 +90,8 @@ exports.deleteAccount = async (req, res) => {
             message: "User deleted successfully",
         })
         await CourseProgress.deleteMany({ userId: id })
+        //Delete Rating of Users
+        await RatingandReview.deleteMany({ user: id })
     } catch (error) {
         console.log(error)
         res.status(500).json({
