@@ -89,16 +89,25 @@ const ContactUsForm = () => {
                     Email Address
                 </label>
                 <input
-                    type="email"
+                    type="text"
                     name="email"
                     id="email"
                     placeholder="Enter email address"
                     className="form-style"
-                    {...register("email", { required: true })}
+                    {...register("email", {
+                        required: {
+                            value: true,
+                            message: "Please enter your Email address.",
+                        },
+                        pattern: {
+                            value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                            message: "Please enter your valid Email address.",
+                        },
+                    })}
                 />
                 {errors.email && (
                     <span className="-mt-1 text-[12px] text-yellow-100">
-                        Please enter your Email address.
+                        {errors.email.message}
                     </span>
                 )}
             </div>

@@ -29,7 +29,7 @@ const InstructorSection = () => {
                     </p>
 
                     <div className="w-fit">
-                        <CTAButton active={true} linkto={"/signup"}>
+                        <CTAButton active={true} linkto={"/signup/instructor"}>
                             <div className="flex items-center gap-3">
                                 Start Teaching Today
                                 <FaArrowRight />

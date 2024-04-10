@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { toast } from "react-hot-toast"
 import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
 import { useDispatch } from "react-redux"
@@ -9,12 +9,20 @@ import { setSignupData } from "../../../slices/authSlice"
 import { ACCOUNT_TYPE } from "../../../utils/constants"
 import Tab from "../../Common/Tab"
 
-function SignupForm() {
+function SignupForm({ actor }) {
     const navigate = useNavigate()
     const dispatch = useDispatch()
 
     // student or instructor
     const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT)
+
+    useEffect(() => {
+        if (actor && actor === "instructor") {
+            setAccountType(ACCOUNT_TYPE.INSTRUCTOR)
+        } else if (actor && actor === "student") {
+            setAccountType(ACCOUNT_TYPE.STUDENT)
+        }
+    }, [])
 
     const [formData, setFormData] = useState({
         firstName: "",
@@ -41,22 +49,58 @@ function SignupForm() {
     const handleOnSubmit = (e) => {
         e.preventDefault()
 
-        if (password !== confirmPassword) {
-            toast.error("Passwords Do Not Match")
+        if (!formData.firstName) {
+            toast.error("Please Enter the First Name")
             return
         }
+        if (!formData.lastName) {
+            toast.error("Please Enter the Last Name")
+            return
+        }
+        if (!formData.email) {
+            toast.error("Please Enter the Email Address")
+            return
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        if (!emailRegex.test(formData.email)) {
+            toast.error("Please Enter a Valid Email Address")
+            return
+        }
+        if (!formData.password) {
+            toast.error("Please Enter the Password")
+            return
+        }
+        if (!formData.confirmPassword) {
+            toast.error("Please Enter the Confirm Password")
+            return
+        }
+        if (formData.password.length < 8) {
+            toast.error("Please Enter the Password atleast 8 Character")
+            return
+        }
+        if (password !== confirmPassword) {
+            toast.error("Passwords & Confirm Password Must be Same")
+            return
+        }
+
+        const passwordRegex =
+            /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()\-_=+\\\|\[\]{};:'",.<>/?]).{8,}$/
+        if (!passwordRegex.test(formData.password)) {
+            toast.error(
+                "Password must be contain atleast 1 Uppercase, 1 Lowercase, 1 Numeric, 1 Special Character"
+            )
+            return
+        }
+
         const signupData = {
             ...formData,
             accountType,
         }
 
-        // Setting signup data to state
-        // To be used after otp verification
         dispatch(setSignupData(signupData))
-        // Send OTP to user for verification
         dispatch(sendOtp(formData.email, navigate))
 
-        // Reset
+        // Form Reset
         setFormData({
             firstName: "",
             lastName: "",
@@ -100,7 +144,6 @@ function SignupForm() {
                             First Name <sup className="text-pink-200">*</sup>
                         </p>
                         <input
-                            required
                             type="text"
                             name="firstName"
                             value={firstName}
@@ -114,7 +157,6 @@ function SignupForm() {
                             Last Name <sup className="text-pink-200">*</sup>
                         </p>
                         <input
-                            required
                             type="text"
                             name="lastName"
                             value={lastName}
@@ -129,7 +171,6 @@ function SignupForm() {
                         Email Address <sup className="text-pink-200">*</sup>
                     </p>
                     <input
-                        required
                         type="text"
                         name="email"
                         value={email}
@@ -145,7 +186,6 @@ function SignupForm() {
                             <sup className="text-pink-200">*</sup>
                         </p>
                         <input
-                            required
                             type={showPassword ? "text" : "password"}
                             name="password"
                             value={password}
@@ -173,7 +213,6 @@ function SignupForm() {
                             <sup className="text-pink-200">*</sup>
                         </p>
                         <input
-                            required
                             type={showConfirmPassword ? "text" : "password"}
                             name="confirmPassword"
                             value={confirmPassword}

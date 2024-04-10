@@ -83,7 +83,7 @@ function App() {
                     }
                 />
                 <Route
-                    path="signup"
+                    path="signup/:id?"
                     element={
                         <OpenRoute>
                             <Signup />

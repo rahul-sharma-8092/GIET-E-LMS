@@ -78,7 +78,7 @@ function Home() {
                         }
                         ctabtn1={{
                             btnText: "Try it Yourself",
-                            link: "/signup",
+                            link: "https://vscode.dev/",
                             active: true,
                         }}
                         ctabtn2={{
