@@ -9,6 +9,7 @@ const User = require("../models/User")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const CourseProgress = require("../models/CourseProgress")
 const { convertSecondsToDuration } = require("../utils/secToDuration")
+const mongoose = require("mongoose")
 // Function to create a new course
 exports.createCourse = async (req, res) => {
     try {
@@ -423,10 +424,42 @@ exports.getInstructorCourses = async (req, res) => {
         // Get the instructor ID from the authenticated user or request body
         const instructorId = req.user.id
 
-        // Find all courses belonging to the instructor
         const instructorCourses = await Course.find({
             instructor: instructorId,
-        }).sort({ createdAt: -1 })
+        })
+            .populate({
+                path: "courseContent",
+                populate: {
+                    path: "subSection",
+                },
+            })
+            .sort({ createdAt: -1 })
+            .exec()
+
+        // var SubsectionLength = 0
+        for (var i = 0; i < instructorCourses.length; i++) {
+            let totalDurationInSeconds = 0
+            // SubsectionLength = 0
+            for (
+                var j = 0;
+                j < instructorCourses[i].courseContent.length;
+                j++
+            ) {
+                totalDurationInSeconds += instructorCourses[i].courseContent[
+                    j
+                ].subSection.reduce(
+                    (acc, curr) => acc + parseInt(curr.timeDuration),
+                    0
+                )
+            }
+            instructorCourses[i] = instructorCourses[i].toObject()
+
+            instructorCourses[i].duration = convertSecondsToDuration(
+                totalDurationInSeconds
+            )
+        }
+
+        console.log(instructorCourses)
 
         // Return the instructor's courses
         res.status(200).json({
