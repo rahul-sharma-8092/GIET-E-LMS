@@ -23,11 +23,5 @@ const ratingAndReviewSchema = new mongoose.Schema({
     },
 })
 
-// ratingAndReviewSchema.pre("remove", async function (next) {
-//     console.log("Rating Remove PRE Called")
-//     await mongoose.model("RatingAndReview").deleteMany({ user: this._id })
-//     next()
-// })
-
 // Export the RatingAndReview model
 module.exports = mongoose.model("RatingAndReview", ratingAndReviewSchema)

@@ -13,6 +13,8 @@ const {
     editCourse,
     getInstructorCourses,
     deleteCourse,
+    createCourseCertificate,
+    getCourseCertificate,
 } = require("../controllers/Course")
 
 // Tags Controllers Import
@@ -85,6 +87,15 @@ router.post("/updateCourseProgress", auth, isStudent, updateCourseProgress)
 // router.post("/getProgressPercentage", auth, isStudent, getProgressPercentage)
 // Delete a Course
 router.delete("/deleteCourse", deleteCourse)
+// Create a Course Certificate
+router.post(
+    "/createCourseCertificate",
+    auth,
+    isStudent,
+    createCourseCertificate
+)
+// Get Course Certificate Details
+router.post("/getCourseCertificate", getCourseCertificate)
 
 // ********************************************************************************************************
 //                                      Category routes (Only by Admin)

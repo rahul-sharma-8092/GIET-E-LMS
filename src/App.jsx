@@ -31,6 +31,7 @@ import Login from "./pages/Login"
 import Signup from "./pages/Signup"
 import UpdatePassword from "./pages/UpdatePassword"
 import VerifyEmail from "./pages/VerifyEmail"
+import ViewCertificate from "./pages/ViewCertificate"
 import ViewCourse from "./pages/ViewCourse"
 import { getUserDetails } from "./services/operations/profileAPI"
 import { ACCOUNT_TYPE } from "./utils/constants"
@@ -98,6 +99,11 @@ function App() {
                         </OpenRoute>
                     }
                 />
+                <Route
+                    path="Certificate/:certificateId"
+                    element={<ViewCertificate />}
+                />
+
                 {/* Private Route - for Only Logged in User */}
                 <Route
                     element={

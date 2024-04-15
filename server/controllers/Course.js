@@ -5,6 +5,7 @@ const Course = require("../models/Course")
 const Category = require("../models/Category")
 const Section = require("../models/Section")
 const SubSection = require("../models/Subsection")
+const Certificate = require("../models/Certificate")
 const User = require("../models/User")
 const { uploadImageToCloudinary } = require("../utils/imageUploader")
 const CourseProgress = require("../models/CourseProgress")
@@ -135,6 +136,86 @@ exports.createCourse = async (req, res) => {
         })
     }
 }
+
+exports.createCourseCertificate = async (req, res) => {
+    const userId = req.user.id
+    const courseId = req.body.courseId
+
+    try {
+        // Check if the user is a student
+        const studentDetails = await User.findById(userId, {})
+
+        if (studentDetails.accountType !== "Student") {
+            return res.status(404).json({
+                success: false,
+                message: "Student Details Not Found",
+            })
+        }
+
+        // Check if the course is exists or not
+        const courseDetails = await Course.findById(courseId, {})
+
+        if (!courseDetails) {
+            return res.status(404).json({
+                success: false,
+                message: "Course Details Not Found",
+            })
+        }
+
+        // Is Certificate already exist
+        let certificateDetails = await Certificate.findOne({
+            student: studentDetails._id,
+            course: courseDetails._id,
+        })
+
+        // If Not then create a certificate
+        if (!certificateDetails) {
+            certificateDetails = await Certificate.create({
+                student: studentDetails._id,
+                course: courseDetails._id,
+            })
+        }
+        console.log("certificateDetails", certificateDetails)
+
+        res.status(201).json({
+            success: true,
+            data: certificateDetails,
+            message: "Certificate Created Successfully",
+        })
+    } catch (error) {
+        console.error(error)
+        res.status(500).json({
+            success: false,
+            message: "Failed to create certificate",
+            error: error.message,
+        })
+    }
+}
+
+exports.getCourseCertificate = async (req, res) => {
+    const certificateId = req.body.certificateId
+
+    let certificateDetails = await Certificate.findById(certificateId)
+        .populate("student")
+        .populate("course")
+        .exec()
+
+    if (!certificateDetails) {
+        return res.status(404).json({
+            success: false,
+            message: "Certificate Not Found",
+        })
+    }
+
+    console.log("Certificate API", certificateDetails)
+
+    res.status(200).json({
+        success: true,
+        message: "Certificate Details fetched",
+        data: certificateDetails,
+    })
+}
+
 // Edit Course Details
 exports.editCourse = async (req, res) => {
     try {

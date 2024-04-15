@@ -61,7 +61,10 @@ function SignupForm({ actor }) {
             toast.error("Please Enter the Email Address")
             return
         }
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        // const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
+        const emailRegex =
+            /^[a-zA-Z][a-zA-Z0-9._%+-]*[a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/
+
         if (!emailRegex.test(formData.email)) {
             toast.error("Please Enter a Valid Email Address")
             return

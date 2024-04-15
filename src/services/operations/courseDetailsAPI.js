@@ -22,6 +22,8 @@ const {
     GET_FULL_COURSE_DETAILS_AUTHENTICATED,
     CREATE_RATING_API,
     LECTURE_COMPLETION_API,
+    CREATE_COURSE_CERTIFICATE,
+    GET_COURSE_CERTIFICATE,
 } = courseEndpoints
 
 export const getAllCourses = async () => {
@@ -414,4 +416,47 @@ export const createRating = async (data, token) => {
     }
     toast.dismiss(toastId)
     return success
+}
+
+export const createCourseCertificate = async (data, token) => {
+    const toastId = toast.loading("Loading...")
+    try {
+        const response = await apiConnector(
+            "POST",
+            CREATE_COURSE_CERTIFICATE,
+            data,
+            { Authorization: `Bearer ${token}` }
+        )
+
+        if (response.status === 201) {
+            console.log("Certificate created")
+            return response
+        }
+    } catch (error) {
+        console.log("CREATE Cerificate ERROR............", error)
+        toast.error(error.message)
+    } finally {
+        toast.dismiss(toastId)
+    }
+}
+
+export const getCourseCertificate = async (data) => {
+    const toastId = toast.loading("Loading...")
+    let result = {}
+    try {
+        const response = await apiConnector(
+            "POST",
+            GET_COURSE_CERTIFICATE,
+            data
+        )
+        if (!response?.data?.success) {
+            throw new Error("Could Not Fetch Course Categories")
+        }
+        result = response?.data?.data
+    } catch (error) {
+        console.log("GET_ALL_COURSE_API API ERROR............", error)
+        toast.error(error.message)
+    }
+    toast.dismiss(toastId)
+    return result
 }
