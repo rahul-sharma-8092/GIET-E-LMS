@@ -197,7 +197,12 @@ exports.getCourseCertificate = async (req, res) => {
 
     let certificateDetails = await Certificate.findById(certificateId)
         .populate("student")
-        .populate("course")
+        .populate({
+            path: "course",
+            populate: {
+                path: "instructor",
+            },
+        })
         .exec()
 
     if (!certificateDetails) {

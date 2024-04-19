@@ -1,10 +1,13 @@
 import { useEffect, useRef, useState } from "react"
+import { Watermark } from "@hirohe/react-watermark"
 import html2canvas from "html2canvas"
 import jsPDF from "jspdf"
 import toast from "react-hot-toast"
+import QRCode from "react-qr-code"
 import { useParams } from "react-router-dom"
 
-import logo from "../assets/Logo/Logo.jpg"
+import elmslogo from "../assets/Logo/Logo.jpg"
+import gietlogo from "../assets/Logo/giet-logo.png"
 import { getCourseCertificate } from "../services/operations/courseDetailsAPI"
 
 export default function ViewCertificate() {
@@ -26,8 +29,8 @@ export default function ViewCertificate() {
         try {
             // Capture the content div to a canvas
             const canvas = await html2canvas(contentRef.current, {
-                scrollY: -window.scrollY,
-                allowTaint: true,
+                width: 842,
+                height: 595,
             })
 
             // Initialize jsPDF in landscape mode
@@ -58,16 +61,7 @@ export default function ViewCertificate() {
 
             // Add image to the PDF
             const imgData = canvas.toDataURL("image/png")
-            pdf.addImage(
-                imgData,
-                "PNG",
-                0,
-                0,
-                canvasWidth,
-                canvasHeight,
-                "",
-                "FAST"
-            )
+            pdf.addImage(imgData, "JPEG", 0, 0, canvasWidth, canvasHeight)
 
             // Download the PDF
             pdf.save("certificate.pdf")
@@ -79,107 +73,111 @@ export default function ViewCertificate() {
 
     return (
         <>
-            <div>
-                <button
-                    onClick={handlerDownloadPDF}
-                    className="bg-yellow-50 px-3 py-2 text-white"
-                >
-                    Download PDF
-                </button>
-            </div>
-            <div
-                ref={contentRef}
-                className="border-gray-300 mx-auto h-[714px] w-[1010px]  rounded-lg border-2 bg-white p-8 shadow-lg"
-            >
-                <div className="flex items-start justify-between">
-                    <div className="flex items-center space-x-4"></div>
-                    <div className="text-center">
-                        <img
-                            alt="LearnSmasher logo"
-                            height="60"
-                            src={logo}
-                            style={{
-                                aspectRatio: "200/60",
-                                objectFit: "cover",
-                            }}
-                            width="200"
-                        />
-                        <p className="text-sm font-light">
-                            learn. grow. succeed.
-                        </p>
-                        <p className="text-xs font-light">
-                            www.learnsmasher.in
-                        </p>
+            {response && (
+                <div className="relative my-auto">
+                    <div className="absolute right-2">
+                        <button
+                            onClick={handlerDownloadPDF}
+                            className="rounded bg-yellow-50 px-4 py-2 text-center text-[13px] font-bold text-black shadow-[2px_2px_0px_0px_rgba(255,255,255,0.18)] transition-all  duration-200 hover:scale-95 hover:shadow-none sm:text-[16px]"
+                        >
+                            Download PDF
+                        </button>
                     </div>
-                    <div>
-                        <p className="text-xs font-medium">C.ID.: dac717e</p>
-                        <img
-                            alt="QR Code"
-                            className="mt-1"
-                            height="100"
-                            src="/placeholder.svg"
-                            style={{
-                                aspectRatio: "100/100",
-                                objectFit: "cover",
-                            }}
-                            width="100"
-                        />
+                    <div
+                        ref={contentRef}
+                        className="mx-auto h-[595px] w-[842px] bg-[url('assets/Template/CertificateTemplate.png')] bg-cover p-2"
+                    >
+                        <div className="h-full w-full rounded bg-gradient-to-br from-yellow-5 via-yellow-400 to-yellow-500 p-1">
+                            <div className="h-full w-full bg-white p-1">
+                                <div className="h-full w-full rounded bg-gradient-to-br from-yellow-5 via-yellow-400 to-yellow-500 p-[5px]">
+                                    <div className="flex h-full w-full flex-col justify-between bg-[#f4f5f7] p-3">
+                                        <div className="mt-[15px] text-center font-yatra text-6xl text-[#1d2830]">
+                                            Certificate of Completion
+                                        </div>
+
+                                        <div className="mt-5 flex items-center justify-evenly ">
+                                            <div className="w-[150px]">
+                                                <img
+                                                    width="100"
+                                                    src={gietlogo}
+                                                    alt="Logo"
+                                                />
+                                            </div>
+                                            <div className="">
+                                                <span className="text-center font-belleza text-3xl">
+                                                    This is awarded to
+                                                </span>
+                                            </div>
+                                            <div className="w-[150px]">
+                                                <img
+                                                    className="align-middle"
+                                                    width="150"
+                                                    src={elmslogo}
+                                                    alt="Logo"
+                                                />
+                                            </div>
+                                        </div>
+
+                                        <div className="text-center">
+                                            <h2 className="inline-block  text-center font-alexBrush text-7xl">
+                                                {response?.student?.firstName +
+                                                    " " +
+                                                    response?.student?.lastName}
+                                            </h2>
+                                        </div>
+
+                                        <div className="text-center">
+                                            <p className="inline-block w-4/5 pt-2 text-center font-belleza text-xl">
+                                                for successfully completing
+                                                the&nbsp;
+                                                <b>
+                                                    {response.course.courseName}
+                                                </b>
+                                                &nbsp;course. Acknowledges
+                                                dedication, skills, and
+                                                commitment to continuous
+                                                learning.
+                                            </p>
+                                        </div>
+
+                                        <div className="flex items-end justify-between px-10">
+                                            <div className="flex flex-col items-center justify-center pb-5">
+                                                <span>
+                                                    {`Prof. ${response.course.instructor.firstName} ${response.course.instructor.lastName}`}
+                                                </span>
+                                                <span className="font-poppins font-bold">
+                                                    Instructor
+                                                </span>
+                                            </div>
+                                            <div className="m-2 max-w-[120px] text-center">
+                                                <QRCode
+                                                    size={256}
+                                                    style={{
+                                                        height: "auto",
+                                                        maxWidth: "100%",
+                                                        width: "100%",
+                                                    }}
+                                                    value={`https://giet-elms.vercel.app/Certificate/${response._id}`}
+                                                    viewBox={`0 0 256 256`}
+                                                />
+                                                <span>Scan for Verify</span>
+                                            </div>
+                                            <div className="flex flex-col items-center justify-center pb-5">
+                                                <span>
+                                                    Prof Dr. Jibanananda Jena
+                                                </span>
+                                                <span className="font-poppins font-bold">
+                                                    Principal
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
-                <div className="my-6 text-center">
-                    <h1 className="text-3xl font-bold uppercase">
-                        Course Completion Certificate
-                    </h1>
-                    <p className="mt-2 text-lg font-semibold">
-                        This is to certify that
-                    </p>
-                </div>
-                <div className="my-4 text-center">
-                    <p className="text-red-600 text-4xl font-bold">
-                        {response?.student?.firstName +
-                            " " +
-                            response?.student?.lastName}
-                    </p>
-                </div>
-                <p className="my-6 text-center text-lg">
-                    has successfully completed the course -{" "}
-                    <span className="font-semibold">
-                        {response?.course?.courseName}.
-                    </span>
-                </p>
-                <p className="text-center text-lg"></p>
-                <div className="mt-8 flex items-center justify-between">
-                    <div className="flex flex-col items-center">
-                        <img
-                            alt="Signature"
-                            height="50"
-                            src="/placeholder.svg"
-                            style={{
-                                aspectRatio: "150/50",
-                                objectFit: "cover",
-                            }}
-                            width="150"
-                        />
-                        <p className="mt-1 text-sm font-medium">Founder</p>
-                        <p className="text-sm font-medium">LearnSmasher</p>
-                    </div>
-                    <div className="text-center">
-                        <p className="text-lg font-semibold">Date</p>
-                        <p className="text-green-600 text-lg font-semibold">
-                            11/06/2023
-                        </p>
-                    </div>
-                </div>
-                <div className="mt-6 flex items-center justify-between">
-                    <p className="text-xs">
-                        contact.learnsmasher@gmail.com | +917083448246 |
-                        www.learnsmasher.in
-                    </p>
-                    <p className="text-xs">
-                        verify at: - https://verify.learnsmasher.in
-                    </p>
-                </div>
-            </div>
+            )}
         </>
     )
 }
