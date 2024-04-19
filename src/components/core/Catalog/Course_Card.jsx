@@ -15,7 +15,7 @@ function Course_Card({ course, Height }) {
         console.log(course)
         const count = GetAvgRating(course.ratingAndReviews)
         setAvgReviewCount(count)
-        console.log("AVG Rating", count)
+        console.log("AVG Rating", course.ratingAndReviews, count)
     }, [course])
     // console.log("count............", avgReviewCount)
 

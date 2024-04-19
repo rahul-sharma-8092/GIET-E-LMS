@@ -1,13 +1,15 @@
 export default function GetAvgRating(ratingArr) {
-  if (ratingArr?.length === 0) return 0
-  const totalReviewCount = ratingArr?.reduce((acc, curr) => {
-    acc += curr.rating
-    return acc
-  }, 0)
+    if (ratingArr?.length === 0) return 0
+    console.log("ratingArr: ", ratingArr)
+    const totalReviewCount = ratingArr?.reduce((acc, curr) => {
+        acc += curr.rating
+        return acc
+    }, 0)
 
-  const multiplier = Math.pow(10, 1)
-  const avgReviewCount =
-    Math.round((totalReviewCount / ratingArr?.length) * multiplier) / multiplier
+    const multiplier = Math.pow(10, 1)
+    const avgReviewCount =
+        Math.round((totalReviewCount / ratingArr?.length) * multiplier) /
+        multiplier
 
-  return avgReviewCount
+    return avgReviewCount
 }
